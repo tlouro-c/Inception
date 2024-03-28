@@ -5,9 +5,13 @@ RUN apt-get update -y \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* /var/tmp /tmp
 
+COPY conf/mariadb.conf /etc/mysql/mariadb.conf
+
+COPY tools/mariadb.sh .
+
 EXPOSE 3306
 
-COPY conf/mariadb.conf /etc/mysql/mariadb.conf
+ENTRYPOINT [ "mariadb.sh" ]
 
 
 
