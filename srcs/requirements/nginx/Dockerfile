@@ -1,9 +1,9 @@
 FROM debian:bullseye
 
-RUN apt-get update \
+RUN apt-get update -y \
 	&& apt-get install -y nginx openssl \
 	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/*
+	&& rm -rf /var/lib/apt/lists/* /var/tmp /tmp
 
 WORKDIR /etc/nginx
 
