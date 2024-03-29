@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mariadb:
+    container_name: mariadb-container
+    image: mariadb
+    build: ./requirements/mariadb
+    env_file: ./.env
+    expose: "3306"
+    networks: docker-network
+    volumes:
+      - /home/tlouro-c/data:/var/lib/mysql/
+    restart: unless-stopped
+
+  wordpress:
+    depends_on: mariadb
+    container_name: wordpress-container
+    image: wordpress
+    build: ./requirements/wordpress
+    env_file: ./.env
+    networks: docker-network
+    expose: "9000"
+    volumes:
+      -/home/tlouro-c/data:/var/www/html/
+    restart: unless-stopped
+
+  nginx:
+    depends_on: wordpress
+    container_name: nginx
+    image: nginx
+    build: ./requirements/nginx
+    env_file: ./.env
+    networks: docker-network
+    expose: "9000"
+    ports: 443:443
+    restart: unless-stopped
+
+networks:
+  docker-network:
+    name: docker-network

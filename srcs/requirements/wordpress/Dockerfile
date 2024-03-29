@@ -11,6 +11,8 @@ WORKDIR /var/www/html/
 
 COPY tools/wordpress.sh .
 
-ENTRYPOINT [ "wordpress.sh" ]
+RUN	chmod +x wordpress.sh
 
 EXPOSE 9000 3306
+
+ENTRYPOINT [ "wordpress.sh" ]
