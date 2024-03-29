@@ -9,7 +9,10 @@ COPY conf/mariadb.conf /etc/mysql/mariadb.conf
 
 COPY tools/mariadb.sh .
 
-RUN	chmod +x mariadb.sh
+RUN mkdir ~/bin \
+	&& mv ./mariadb.sh ~/bin \
+	&& export PATH=$PATH:~/bin \
+	&& chmod +x ~/bin/*
 
 EXPOSE 3306
 

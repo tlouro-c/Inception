@@ -11,7 +11,10 @@ WORKDIR /var/www/html/
 
 COPY tools/wordpress.sh .
 
-RUN	chmod +x wordpress.sh
+RUN mkdir ~/bin \
+	&& mv ./wordpress.sh ~/bin \
+	&& export PATH=$PATH:~/bin \
+	&& chmod +x ~/bin/*
 
 EXPOSE 9000 3306
 
