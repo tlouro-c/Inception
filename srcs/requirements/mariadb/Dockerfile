@@ -3,20 +3,18 @@ FROM debian:bullseye
 RUN apt-get update -y \
 	&& apt-get install mariadb-server mariadb-client -y \
 	&& apt-get clean \
-	&& rm -rf /var/lib/apt/lists/* /var/tmp /tmp
+	&& rm -rf /var/lib/apt/lists/*
 
 COPY conf/mariadb.conf /etc/mysql/mariadb.conf
 
 COPY tools/mariadb.sh .
 
-RUN mkdir ~/bin \
-	&& mv ./mariadb.sh ~/bin \
-	&& export PATH=$PATH:~/bin \
-	&& chmod +x ~/bin/*
+RUN mv ./mariadb.sh /bin \
+	&& chmod +x /bin/mariadb.sh
 
 EXPOSE 3306
 
-ENTRYPOINT [ "mariadb.sh" ]
+CMD [ "mariadb.sh" ]
 
 
 

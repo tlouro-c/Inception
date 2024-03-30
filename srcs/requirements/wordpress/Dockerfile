@@ -1,7 +1,7 @@
 FROM debian:bullseye
 
 RUN apt-get update -y \
-	&& apt-get install wget \
+	&& apt-get install wget curl \
 	php \
 	php-mysql php-curl php-gd php-mbstring php-xml php-xmlrpc php-soap php-intl php-zip -y \
 	&& apt-get clean \
@@ -11,10 +11,8 @@ WORKDIR /var/www/html/
 
 COPY tools/wordpress.sh .
 
-RUN mkdir ~/bin \
-	&& mv ./wordpress.sh ~/bin \
-	&& export PATH=$PATH:~/bin \
-	&& chmod +x ~/bin/*
+RUN mv ./wordpress.sh /bin \
+	&& chmod +x /bin/wordpress.sh
 
 EXPOSE 9000 3306
 

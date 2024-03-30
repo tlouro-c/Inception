@@ -22,3 +22,6 @@ FLUSH PRIVILEGES;
 EXIT;
 EOF
 fi
+
+mysqld --bind-address=0.0.0.0
+
