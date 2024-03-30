@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 wordpress_db_dir="/var/lib/mysql/$DB"
 
@@ -21,7 +21,7 @@ GRANT ALL PRIVILEGES ON "$DB".* TO '$MYSQL_MANAGER'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 EOF
+echo test
 fi
 
-mysqld --bind-address=0.0.0.0
-
+mysqld_safe
