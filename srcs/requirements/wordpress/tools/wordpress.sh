@@ -16,7 +16,7 @@ if [ ! -f "wp-config.php" ]; then
 	sed -i "s/database_name_here/"$DB"/g" wordpress/wp-config.php
 	sed -i "s/username_here/"$MYSQL_MANAGER"/g" wordpress/wp-config.php
 	sed -i "s/password_here/"$MYSQL_MANAGER_PASSWORD"/g" wordpress/wp-config.php
-	sed -i "s/localhost/0a2d206973e9/g" wordpress/wp-config.php
+	sed -i "s/localhost/mariadb/g" wordpress/wp-config.php
 
 	rm wordpress/wp-config-sample.php
 	
