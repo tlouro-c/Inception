@@ -6,35 +6,43 @@ services:
     image: mariadb
     build: ./requirements/mariadb
     env_file: ./.env
-    expose: "3306"
-    networks: docker-network
+    expose:
+      - "3306"
+    networks:
+      - docker-network
     volumes:
-      - /home/tlouro-c/data:/var/lib/mysql/
+      - /home/tlouro-c/data/mysql:/var/lib/mysql/
     restart: unless-stopped
 
   wordpress:
-    depends_on: mariadb
+    depends_on:
+      - mariadb
     container_name: wordpress-container
     image: wordpress
     build: ./requirements/wordpress
     env_file: ./.env
-    networks: docker-network
-    expose: "9000"
+    networks: 
+      - docker-network
+    expose:
+      - "9000"
     volumes:
-      -/home/tlouro-c/data:/var/www/html/
+      - /home/tlouro-c/data/wordpress:/var/www/html/
     restart: unless-stopped
 
   nginx:
-    depends_on: wordpress
-    container_name: nginx
+    depends_on:
+      - wordpress
+    container_name: nginx-container
     image: nginx
     build: ./requirements/nginx
     env_file: ./.env
-    networks: docker-network
-    expose: "9000"
-    ports: 443:443
+    networks:
+      - docker-network
+    expose:
+      - "9000"
+    ports:
+      - 443:443
     restart: unless-stopped
 
 networks:
   docker-network:
-    name: docker-network
