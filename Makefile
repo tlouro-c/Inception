@@ -1,4 +1,5 @@
-all: docker compose --file srcs/docker-compose.yml up --detach
+all: 
+	docker compose --file srcs/docker-compose.yml up --build --detach
 restart:
 fclean:
 re:

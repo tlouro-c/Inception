@@ -46,3 +46,4 @@ services:
 
 networks:
   docker-network:
+    name: docker-network
