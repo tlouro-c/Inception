@@ -11,7 +11,7 @@ services:
     networks:
       - docker-network
     volumes:
-      - mariadb-container:/var/lib/mysql/
+      - mariadb-volume:/var/lib/mysql/
     restart: unless-stopped
 
   wordpress:
@@ -52,14 +52,14 @@ networks:
 
 volumes:
   mariadb-volume:
-    name: mariadb-volume;
+    name: mariadb-volume
     driver: local
     driver_opts:
       type: none
       device: /home/tlouro-c/data/mariadb
       o: 'bind'
   wordpress-volume:
-    name: wordpress-volume;
+    name: wordpress-volume
     driver: local
     driver_opts:
       type: none
