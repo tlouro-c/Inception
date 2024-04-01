@@ -11,7 +11,7 @@ services:
     networks:
       - docker-network
     volumes:
-      - /home/tlouro-c/data/mysql:/var/lib/mysql/
+      - mariadb-container:/var/lib/mysql/
     restart: unless-stopped
 
   wordpress:
@@ -26,7 +26,7 @@ services:
     expose:
       - "9000"
     volumes:
-      - /home/tlouro-c/data/wordpress:/var/www/html/
+      - wordpress-volume:/var/www/html/
     restart: unless-stopped
 
   nginx:
@@ -42,8 +42,27 @@ services:
       - "9000"
     ports:
       - 443:443
+    volumes:
+      - wordpress-volume:/var/www/html/
     restart: unless-stopped
 
 networks:
   docker-network:
     name: docker-network
+
+volumes:
+  mariadb-volume:
+    name: mariadb-volume;
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/tlouro-c/data/mariadb
+      o: 'bind'
+  wordpress-volume:
+    name: wordpress-volume;
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/tlouro-c/data/wordpress
+      o: 'bind'
+
