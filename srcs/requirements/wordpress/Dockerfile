@@ -14,12 +14,14 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 	&& mv wp-cli.phar /usr/local/bin/wp
 
 COPY tools/wordpress.sh .
+COPY conf/www.conf /etc/php7.4/fpm/pool.d/
 
 RUN mv ./wordpress.sh /bin \
 	&& chmod +x /bin/wordpress.sh
 
 RUN export PATH="$PATH:/usr/sbin" \ 
-	&& mkdir -p /run/php 
+	&& mkdir -p /run/php
+
 
 # export PATH="$PATH:/usr/sbin": add directory to PATH where the php-fpm executable is
 # mkdir -p /run/php: php-fpm needed a running directory for the socket file (wasn't being created by default)
