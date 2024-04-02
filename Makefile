@@ -33,7 +33,7 @@ fclean:
 	@docker ps -qa | xargs -r docker rm >/dev/null 2>&1
 	@docker images -qa | xargs -r docker rmi >/dev/null 2>&1
 	@if [ "$(DOCKER_NETWORK)" -gt 0 ]; then \
-	docker network rm docker-network; \
+	docker network rm docker-network >/dev/null 2>&1; \
 	fi
 	@docker volume ls -q | xargs -r docker volume rm >/dev/null 2>&1
 	@sudo rm -rf /home/tlouro-c/data

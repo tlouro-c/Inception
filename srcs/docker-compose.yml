@@ -27,7 +27,6 @@ services:
       - docker-network
     expose:
       - "9000"
-      - "3306"
     volumes:
       - wordpress-volume:/var/www/html/
     restart: unless-stopped
@@ -45,8 +44,6 @@ services:
     env_file: ./.env
     networks:
       - docker-network
-    expose:
-      - "9000"
     ports:
       - 443:443
     volumes:
