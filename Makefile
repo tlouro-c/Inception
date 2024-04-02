@@ -21,7 +21,7 @@ shutdown:
 	@echo "\n\e[0;31mServers are down!\033[0m\n"
 
 fclean:
-	while [ "$(IS_DOMAIN_SETUP)" > 0 ]; do \
+	while [ "$(IS_DOMAIN_SETUP)" -gt 0 ]; do \
     sudo sed '$ d' "/etc/hosts" > "/tmp/hosts.tmp" \
     && sudo cp "/tmp/hosts.tmp" "/etc/hosts" \
     && sudo rm /tmp/hosts.tmp; \
