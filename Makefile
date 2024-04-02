@@ -1,10 +1,12 @@
-IS_DOMAIN_SETUP := $(shell grep -q "tlouro-c.42.fr" /etc/hosts | wc -l)
+IS_DOMAIN_SETUP := $(shell grep -c "tlouro-c.42.fr" /etc/hosts)
 LOCAL_IP_ADDRESS := $(shell hostname -i)
 
 all: mount_wordpress mount_mariadb up
 	@if [ "$(IS_DOMAIN_SETUP)" = 0 ]; then \
-	sudo cp /etc/hosts /etc/host_temporary; \
-	echo $(LOCAL_IP_ADDRESS) "     tlouro-c.42.fr" | sudo tee -a /etc/hosts >/dev/null; fi
+	sudo cp /etc/hosts /tmp/hosts.tmp; \
+	echo $(LOCAL_IP_ADDRESS) "     tlouro-c.42.fr" | sudo tee -a /etc/hosts >/dev/null; \
+	sudo rm /tmp/hosts.tmp; \
+	fi
 
 mount_wordpress: 
 	@sudo mkdir -p /home/tlouro-c/data/wordpress
@@ -21,11 +23,11 @@ shutdown:
 	@echo "\n\e[0;31mServers are down!\033[0m\n"
 
 fclean:
-	while [ "$(IS_DOMAIN_SETUP)" -gt 0 ]; do \
-    sudo sed '$ d' "/etc/hosts" > "/tmp/hosts.tmp" \
-    && sudo cp "/tmp/hosts.tmp" "/etc/hosts" \
+	if [ "$(IS_DOMAIN_SETUP)" -gt 0 ]; then \
+	head -n -1 /etc/hosts > /tmp/hosts.tmp \
+    && sudo cp /tmp/hosts.tmp /etc/hosts \
     && sudo rm /tmp/hosts.tmp; \
-done
+	fi
 	@docker ps -q | xargs -r docker stop >/dev/null 2>&1
 	@docker ps -qa | xargs -r docker rm >/dev/null 2>&1
 	@docker images -qa | xargs -r docker rmi >/dev/null 2>&1
