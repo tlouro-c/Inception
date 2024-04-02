@@ -1,7 +1,7 @@
 FROM debian:bullseye
 
 RUN apt-get update -y \
-	&& apt-get install mariadb-server mariadb-client curl -y \
+	&& apt-get install mariadb-server -y \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
