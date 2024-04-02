@@ -31,7 +31,7 @@ fclean:
 	@docker ps -q | xargs -r docker stop >/dev/null 2>&1
 	@docker ps -qa | xargs -r docker rm >/dev/null 2>&1
 	@docker images -qa | xargs -r docker rmi >/dev/null 2>&1
-	@docker network ls -q | grep "docker-network" | xargs -r docker network rm >/dev/null 2>&1
+	@docker network ls | grep docker-network | awk '{print $1}' | xargs -r docker network rm >/dev/null 2>&1
 	@docker volume ls -q | xargs -r docker volume rm >/dev/null 2>&1
 	@sudo rm -rf /home/tlouro-c/data
 	@echo "\n\\e[0;31mFull clean complete!\033[0m\n"
