@@ -13,10 +13,14 @@ services:
     volumes:
       - mariadb-volume:/var/lib/mysql/
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+      start_period: 20s
 
   wordpress:
-    depends_on:
-      - mariadb
     container_name: wordpress-container
     image: wordpress
     build: ./requirements/wordpress
@@ -25,9 +29,14 @@ services:
       - docker-network
     expose:
       - "9000"
+      - "3306"
     volumes:
       - wordpress-volume:/var/www/html/
     restart: unless-stopped
+    depends_on:
+      mariadb:
+        condition: service_healthy
+        restart: true
 
   nginx:
     depends_on:

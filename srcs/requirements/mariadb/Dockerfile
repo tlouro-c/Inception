@@ -1,7 +1,7 @@
 FROM debian:bullseye
 
 RUN apt-get update -y \
-	&& apt-get install mariadb-server mariadb-client -y \
+	&& apt-get install mariadb-server mariadb-client curl -y \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
@@ -12,11 +12,7 @@ RUN mv ./mariadb.sh /bin \
 
 EXPOSE 3306
 
-CMD [ "mariadb.sh" ]
+ENTRYPOINT [ "mariadb.sh" ]
 
-
-
-
-
-
+CMD [ "mysqld_safe" , "--bind-address=0.0.0.0" ]
 

@@ -28,3 +28,5 @@ RUN export PATH="$PATH:/usr/sbin" \
 EXPOSE 9000
 
 ENTRYPOINT [ "wordpress.sh" ]
+
+CMD [ "php-fpm7.4" , "-F" ]

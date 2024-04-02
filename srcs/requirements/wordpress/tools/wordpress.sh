@@ -2,7 +2,7 @@
 
 cd /var/www/html/
 
-if [ ! -f wp-config.php ]; then
+if [ ! -f /var/www/html/wp-config.php ]; then
 	wget https://wordpress.org/latest.tar.gz
 	tar xfz latest.tar.gz
 	rm -f latest.tar.gz
@@ -26,4 +26,5 @@ if [ ! -f wp-config.php ]; then
 	wp user create $WP_USER $WP_USER_EMAIL --user_pass=$WP_USER_PASSWORD --allow-root;
 fi
 
-php-fpm7.4 -F
+exec "$@"
+

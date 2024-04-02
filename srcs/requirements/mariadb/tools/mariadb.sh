@@ -24,7 +24,7 @@ FLUSH PRIVILEGES;
 exit
 _EOF_
 
-sleep 1 # This sleep is key, and for my own understanding, \
+sleep 2 # This sleep is key, and for my own understanding, \
 		# when mariadb is started, it needs some time to create the socket file
 		# so when it's stopped, the socket exists and there's no error.
 
@@ -32,5 +32,4 @@ service mariadb stop
 
 fi
 
-mysqld_safe --bind-address=0.0.0.0
-
+exec "$@"
